@@ -191,6 +191,15 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
+    .next-gig-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      max-height: 900px;     /* tweak if you want */
+      object-fit: contain;
+    }
+    
     .photo-grid .photo {
       aspect-ratio: 16 / 10;
       border-radius: 10px;
@@ -311,6 +320,11 @@
             <strong>Drums</strong> — Kevin Filmer<br>
             <strong>Sound</strong> — Darren McKay
           </p>
+        </div>
+
+        <div class="panel" id="next-gig">
+          <h2>Next Gig</h2>
+          <img src="images/HereAndNow07012026.png" alt="Next Gig Poster" class="next-gig-img">
         </div>
 
         <div class="panel" id="media">
