@@ -1,8 +1,267 @@
 <!DOCTYPE html>
-<html>
-<head><title>My Band</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Band Name</title>
+
+  <style>
+    :root {
+      --maxw: 1100px;
+      --gap: 16px;
+      --pad: 18px;
+      --radius: 12px;
+      --bg: #0b0b0c;
+      --panel: #141416;
+      --panel2: #101012;
+      --text: #f2f2f2;
+      --muted: #b9b9b9;
+      --accent: #e74c3c;
+      --link: #7cc0ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: var(--gap);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--gap);
+    }
+
+    header.banner {
+      background: linear-gradient(135deg, #222, #111);
+      border-radius: var(--radius);
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header.banner .banner-inner {
+      width: 100%;
+      border: 2px dashed #3a3a3a;
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    nav.menu {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav.menu a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--panel2);
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    nav.menu a.cta {
+      background: var(--accent);
+      color: white;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    .left-col, .right-col {
+      display: grid;
+      gap: var(--gap);
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: var(--pad);
+    }
+
+    .panel h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .contact-list {
+      display: grid;
+      gap: 8px;
+      font-size: 0.98rem;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .social-links a {
+      background: var(--panel2);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .embed-box {
+      background: #0d0d0f;
+      border: 2px dashed #333;
+      border-radius: 10px;
+      padding: 12px;
+      min-height: 160px;
+    }
+
+    .youtube-grid, .photo-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .photo-grid .photo {
+      aspect-ratio: 16 / 10;
+      border-radius: 10px;
+      background: #0d0d0f;
+      border: 2px dashed #333;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px 0 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      nav.menu {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
 <body>
-  <h1>My Band Website Works!</h1>
-  <p>This is hosted on GitHub Pages.</p>
+  <div class="wrap">
+
+    <header class="banner">
+      <div class="banner-inner">
+        <h1 style="margin:0; font-size:2rem;">YOUR BAND NAME</h1>
+        <p class="muted" style="margin:8px 0 0 0;">Banner area — drop in logo / hero image</p>
+      </div>
+    </header>
+
+    <nav class="menu">
+      <a href="gigs.html">Gigs</a>
+      <a href="songs.html">Song List</a>
+      <a class="cta" href="https://printify.com/" target="_blank" rel="noopener">Merch (Printify)</a>
+    </nav>
+
+    <main class="content">
+
+      <section class="left-col">
+
+        <div class="panel" id="contact">
+          <h2>Contact / Bookings</h2>
+          <div class="contact-list">
+            <div><strong>Email:</strong> <a href="mailto:yourband@email.com">yourband@email.com</a></div>
+            <div><strong>Phone:</strong> 04xx xxx xxx</div>
+            <div><strong>Location:</strong> Geelong / Melbourne</div>
+          </div>
+
+          <div class="social-links">
+            <a href="https://facebook.com/yourpage" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://youtube.com/@yourchannel" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+
+        <div class="panel" id="social-embeds">
+          <h2>Featured Socials</h2>
+          <div class="embed-box" id="facebook-embed">
+            Facebook embed goes here
+          </div>
+          <div style="height:10px;"></div>
+          <div class="embed-box" id="instagram-embed">
+            Instagram embed/widget goes here
+          </div>
+        </div>
+
+      </section>
+
+      <section class="right-col">
+
+        <div class="panel" id="bio">
+          <h2>Bio</h2>
+          <p class="muted">
+            Bio text goes here. Keep it punchy: what you play, the vibe, and why you’re a killer booking.
+          </p>
+        </div>
+
+        <div class="panel" id="media">
+          <h2>Videos</h2>
+          <div class="youtube-grid">
+            <div class="embed-box">
+              YouTube iframe #1 here
+            </div>
+            <div class="embed-box">
+              YouTube iframe #2 here
+            </div>
+            <div class="embed-box">
+              YouTube iframe #3 here
+            </div>
+          </div>
+
+          <div style="height:14px;"></div>
+
+          <h2>Photos</h2>
+          <div class="photo-grid">
+            <div class="photo">Photo 1</div>
+            <div class="photo">Photo 2</div>
+            <div class="photo">Photo 3</div>
+            <div class="photo">Photo 4</div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="year"></span> YOUR BAND NAME
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
