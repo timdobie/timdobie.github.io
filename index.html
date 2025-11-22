@@ -126,21 +126,19 @@
 
     .social-links {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 8px;
       margin-top: 8px;
     }
 
     .social-links a {
       background: var(--panel2);
-      padding: 8px 10px;
+      padding: 10px 12px;
       border-radius: 8px;
       font-weight: 600;
-    
-      /* NEW: prevent long URLs blowing out flex row */
-      max-width: 100%;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      white-space: nowrap;     
+      overflow: hidden;        
+      text-overflow: ellipsis; 
     }
 
     .embed-box {
