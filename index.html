@@ -206,6 +206,28 @@
       opacity: 0.9;
     }
 
+
+    .bio-flex {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .bio-video-embed {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* Mobile: stack the text and video */
+    @media (max-width: 700px) {
+      .bio-flex {
+        grid-template-columns: 1fr; 
+      }
+    }
+
     .next-gig-img {
       width: 100%;
       height: auto;
@@ -339,14 +361,25 @@
       <section class="right-col">
 
         <div class="panel" id="bio">
-          <h2>Welcome to The Flip Side</h2>
-          <p class="bio-tagline">70's Rock 'n' Roll Revival</p>
-          
-          <p class="muted bio-text">
-            Come back in time with us to when Rock ’n’ Roll was King.<br>
-            Experience the unmistakable sound of the 70s — towering riffs, super-bad grooves, and a big rock attitude.<br>
-            You'll have a great time, we'll have a great time. It'll be out of sight!
-          </p>
+          <div class="bio-flex">
+            
+            <div class="bio-text">
+              <h2>Bio</h2>
+              <p class="muted bio-text-inner">
+                Come back in time with us to when Rock ’n’ Roll was King.<br>
+                Experience the unmistakable sound of the 70s — towering riffs, super-bad grooves, 
+                and a big rock attitude.<br>
+                You'll have a great time, we'll have a great time. It'll be out of sight!
+              </p>
+            </div>
+
+            <div class="bio-video">
+              <video autoplay muted loop playsinline class="bio-video-embed">
+                <source src="videos/FlipSidepPromo26012025.mp4" type="video/mp4">
+              </video>
+            </div>
+
+          </div>
         </div>
 
         <div class="panel" id="next-gig">
