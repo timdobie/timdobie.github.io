@@ -191,6 +191,33 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
+    .poster-lineup {
+      margin: 0;
+      line-height: 1.6;
+    }
+    
+    .poster-lineup .member {
+      display: inline-block;  
+      margin-right: 22px;     
+      margin-bottom: 10px;    
+      white-space: nowrap;  
+    }
+    
+    .poster-lineup strong {
+      color: var(--accent);
+      letter-spacing: .3px;
+    }
+    
+    /* Mobile: each member on its own line */
+    @media (max-width: 600px) {
+      .poster-lineup .member {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 12px;
+        white-space: normal;  /* allow wrapping if a name is long */
+      }
+    }
+
     .next-gig-img {
       width: 100%;
       height: auto;
@@ -312,13 +339,13 @@
           <p class="bio-tagline">70's Rock 'n' Roll Revival</p>
         
           <p class="poster-lineup">
-            <strong>Vocals:</strong> Dustin Leonard  
-            <strong>Guitar:</strong> Adam Parsons  
-            <strong>Guitar:</strong> Arran Adair<br> 
-            <strong>Keyboards:</strong> Bradley Dickins  
-            <strong>Bass:</strong> Tim Dobie <span>(Primary Contact)</span>  
-            <strong>Drums:</strong> Kevin Filmer<br> 
-            <strong>Sound:</strong> Darren McKay
+            <span class="member"><strong>Vocals:</strong> Dustin Leonard</span>
+            <span class="member"><strong>Guitar:</strong> Adam Parsons</span>
+            <span class="member"><strong>Guitar:</strong> Arran Adair</span>
+            <span class="member"><strong>Keyboards:</strong> Bradley Dickins</span>
+            <span class="member"><strong>Bass:</strong> Tim Dobie <span>(Primary Contact)</span></span>
+            <span class="member"><strong>Drums:</strong> Kevin Filmer</span>
+            <span class="member"><strong>Sound:</strong> Darren McKay</span>
           </p>
         </div>
 
