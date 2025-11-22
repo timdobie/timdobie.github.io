@@ -60,30 +60,48 @@
     }
 
     nav.menu {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-left {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
 
-    nav.menu a {
-      padding: 10px 14px;
+    .menu-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nextgig-btn {
+      background: #b57bff;       
+      color: #000;              
+      padding: 10px 16px;
       border-radius: 999px;
-      background: var(--panel2);
-      color: var(--text);
-      font-weight: 600;
-      letter-spacing: 0.2px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
     }
 
-    nav.menu a.cta {
-      background: var(--accent);
-      color: white;
+    .nextgig-btn:hover {
+      background: #c99bff;
+      text-decoration: none;
     }
+
+    /* Mobile: stack menu buttons */
+    @media (max-width: 900px) {
+      nav.menu {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .menu-left,
+      .menu-right {
+        justify-content: center;
+      }
+    }
+
 
     .content {
       display: grid;
@@ -267,9 +285,15 @@
     </header>
     
     <nav class="menu">
-      <a href="gigs.html">Gigs</a>
-      <a href="songs.html">Song List</a>
-      <a class="cta" href="https://printify.com/" target="_blank" rel="noopener">Merch (Printify)</a>
+      <div class="menu-left">
+        <a href="gigs.html">Gigs</a>
+        <a href="songs.html">Song List</a>
+        <a class="cta" href="https://printify.com/" target="_blank" rel="noopener">Merch (Printify)</a>
+      </div>
+
+      <div class="menu-right">
+        <a class="nextgig-btn" href="#next-gig">Next Gig - Jan 7th: Here & Now Lounge</a>
+      </div>
     </nav>
 
     <main class="content">
