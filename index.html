@@ -214,7 +214,25 @@
         <div class="panel" id="social-embeds">
           <h2>Featured Socials</h2>
           <div class="embed-box" id="facebook-embed">
-            Facebook embed goes here
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous"
+              src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0">
+            </script>
+            
+            <div class="fb-page"
+                 data-href="https://www.facebook.com/flipsidecoverband/"
+                 data-tabs="timeline"
+                 data-width=""
+                 data-height="600"
+                 data-small-header="false"
+                 data-adapt-container-width="true"
+                 data-hide-cover="false"
+                 data-show-facepile="false">
+              <blockquote cite="https://www.facebook.com/flipsidecoverband/"
+                          class="fb-xfbml-parse-ignore">
+                <a href="https://www.facebook.com/flipsidecoverband/">Flip Side Cover Band</a>
+              </blockquote>
+            </div>
           </div>
           <div style="height:10px;"></div>
           <div class="embed-box" id="instagram-embed">
