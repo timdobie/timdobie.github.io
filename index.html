@@ -41,15 +41,12 @@
     }
 
     header.banner {
-      background: linear-gradient(135deg, #222, #111);
+      background: url("images/banner.jpg") center/cover no-repeat;
       border-radius: var(--radius);
-      min-height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      text-align: center;
+      min-height: 300px; /* adjust height */
+      width: 100%;
     }
+
 
     header.banner .banner-inner {
       width: 100%;
@@ -171,12 +168,7 @@
 <body>
   <div class="wrap">
 
-    <header class="banner">
-      <div class="banner-inner">
-        <h1 style="margin:0; font-size:2rem;">YOUR BAND NAME</h1>
-        <p class="muted" style="margin:8px 0 0 0;">Banner area — drop in logo / hero image</p>
-      </div>
-    </header>
+    <header class="banner"></header>
 
     <nav class="menu">
       <a href="gigs.html">Gigs</a>
