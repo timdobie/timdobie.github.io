@@ -92,6 +92,14 @@
       align-items: start;
     }
 
+    .content > section,
+    .left-col,
+    .right-col,
+    .panel,
+    .embed-box {
+      min-width: 0;
+    }
+
     .left-col, .right-col {
       display: grid;
       gap: var(--gap);
@@ -128,6 +136,11 @@
       padding: 8px 10px;
       border-radius: 8px;
       font-weight: 600;
+    
+      /* NEW: prevent long URLs blowing out flex row */
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .embed-box {
@@ -136,6 +149,7 @@
       border-radius: 10px;
       padding: 12px;
       min-height: 160px;
+      width: 100%;
     }
 
     .ig-wrapper {
@@ -150,6 +164,22 @@
     }
     
     .ig-wrapper iframe {
+      max-width: 100% !important;
+    }
+
+    /* Facebook embed width lock */
+    #facebook-embed,
+    #facebook-embed .fb-page,
+    #facebook-embed .fb-page span,
+    #facebook-embed iframe {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    /* Instagram embed width lock */
+    #instagram-embed blockquote,
+    #instagram-embed iframe {
+      width: 100% !important;
       max-width: 100% !important;
     }
 
