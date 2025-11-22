@@ -193,34 +193,17 @@
 
     .poster-lineup {
       margin: 0;
-      line-height: 1.6;
-    }
-    
-    .poster-lineup .member {
-      display: inline-block;  
-      margin-right: 22px;     
-      margin-bottom: 2px;    
-      white-space: nowrap;  
-    }
-
-    .poster-lineup .member span {
-      font-size: 0.8em;      /* smaller but still readable */
-      opacity: 0.9;
+      line-height: 1.3;  
     }
     
     .poster-lineup strong {
-      color: #b57bff;
+      color: #b57bff;    
       letter-spacing: .3px;
     }
     
-    /* Mobile: each member on its own line */
-    @media (max-width: 600px) {
-      .poster-lineup .member {
-        display: block;
-        margin-right: 0;
-        margin-bottom: 4px;
-        white-space: normal;  /* allow wrapping if a name is long */
-      }
+    .primary-contact {
+      font-size: 0.8em;   
+      opacity: 0.9;
     }
 
     .next-gig-img {
@@ -228,7 +211,7 @@
       height: auto;
       display: block;
       border-radius: 10px;
-      max-height: 900px;     /* tweak if you want */
+      max-height: 900px;     
       object-fit: contain;
     }
     
@@ -266,8 +249,7 @@
     <header class="banner">
       <img src="images/FlipSabbathLogoWeb.png" alt="Band banner" class="banner-img">
     </header>
-
-
+    
     <nav class="menu">
       <a href="gigs.html">Gigs</a>
       <a href="songs.html">Song List</a>
@@ -299,6 +281,23 @@
           </div>
         </div>
 
+        <div class="panel" id="lineup">
+          <h2>Line Up</h2>
+      
+         <div class="panel" id="lineup">
+          <h2>Line Up</h2>
+        
+          <p class="poster-lineup">
+            <strong>Vocals:</strong> Dustin Leonard<br>
+            <strong>Guitar:</strong> Adam Parsons<br>
+            <strong>Guitar:</strong> Arran Adair<br>
+            <strong>Keyboards:</strong> Bradley Dickins<br>
+            <strong>Bass:</strong> Tim Dobie <span class="primary-contact">(Primary Contact)</span><br>
+            <strong>Drums:</strong> Kevin Filmer<br>
+            <strong>Sound:</strong> Darren McKay
+          </p>
+        </div>
+        
         <div class="panel" id="social-embeds">
           <h2>Socials</h2>
           <div class="embed-box" id="facebook-embed">
