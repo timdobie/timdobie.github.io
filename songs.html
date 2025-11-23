@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flipside — Song List</title>
+
+  <!-- If your site already has a shared stylesheet, link it here:
+  <link rel="stylesheet" href="styles.css" />
+  -->
+
+  <style>
+    :root{
+      --bg:#0c0c10;
+      --panel:#14141b;
+      --panel2:#1a1a24;
+      --text:#e9e9f1;
+      --muted:#a9a9bd;
+      --purple:#7b3ff2;        /* match your Line Up purple vibe */
+      --purple2:#5a2bcf;
+      --line:#2a2a38;
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 10% -10%, #1d123b 0%, transparent 60%),
+                  radial-gradient(900px 600px at 110% 0%, #1a0f2f 0%, transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+
+    /* Top bar */
+    header{
+      position:sticky; top:0; z-index:5;
+      background:rgba(12,12,16,0.9);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .topbar{
+      max-width:1200px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; gap:14px;
+    }
+    .logo{
+      font-weight:800; letter-spacing:0.5px; font-size:20px;
+    }
+    nav{
+      margin-left:auto; display:flex; gap:10px; flex-wrap:wrap;
+    }
+    nav a{
+      text-decoration:none; color:var(--text);
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:14px;
+      background:transparent; border:1px solid transparent;
+    }
+    nav a:hover{ border-color:var(--line); background:var(--panel); }
+
+    main{ max-width:1200px; margin:0 auto; padding:18px; }
+
+    .page-title{
+      display:flex; justify-content:space-between; align-items:end;
+      margin:4px 0 14px;
+    }
+    .page-title h1{
+      margin:0; font-size:34px; letter-spacing:0.2px;
+    }
+    .subtitle{ color:var(--muted); font-size:14px; margin-top:6px; }
+
+    /* Controls */
+    .controls{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      background:var(--panel); border:1px solid var(--line);
+      padding:10px; border-radius:var(--radius);
+    }
+    .controls input, .controls select{
+      background:var(--panel2); color:var(--text);
+      border:1px solid var(--line); border-radius:10px;
+      padding:9px 10px; font-size:14px; outline:none;
+    }
+    .controls input{ min-width:200px; flex:1; }
+    .pill{
+      background:linear-gradient(180deg,var(--purple),var(--purple2));
+      border:none; color:white; padding:9px 12px; border-radius:10px;
+      font-weight:700; cursor:pointer; font-size:14px;
+      box-shadow:0 8px 18px rgba(123,63,242,0.35);
+    }
+    .pill:active{ transform:translateY(1px); }
+
+    /* List */
+    .list{
+      margin-top:12px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .row{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:12px;
+      display:grid;
+      grid-template-columns: 2fr 1.4fr 0.5fr 0.9fr;
+      gap:10px; align-items:center;
+    }
+
+    .cell-title{
+      font-size:18px; font-weight:800; line-height:1.2;
+    }
+    .cell-artist{ color:var(--muted); font-size:15px; font-weight:600; }
+    .cell-year{ font-weight:700; font-size:15px; color:#d6d6ea; }
+
+    .play-btn{
+      justify-self:end;
+      background:transparent; color:var(--text);
+      border:1px solid var(--line);
+      padding:8px 12px; border-radius:10px; font-weight:800;
+      cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    }
+    .play-btn:hover{
+      border-color:var(--purple);
+      box-shadow:0 0 0 3px rgba(123,63,242,0.15);
+    }
+
+    /* Embedded player (collapsed/expanded) */
+    .embed-wrap{
+      grid-column:1 / -1;
+      overflow:hidden;
+      max-height:0;
+      transition:max-height .25s ease;
+    }
+    .row.expanded .embed-wrap{
+      max-height:190px; /* enough for Spotify compact player */
+      margin-top:8px;
+    }
+    iframe.spotify{
+      width:100%;
+      height:152px;
+      border:0;
+      border-radius:12px;
+      background:#000;
+    }
+
+    /* Responsive */
+    @media (max-width: 820px){
+      .row{
+        grid-template-columns: 1fr;
+        gap:6px;
+      }
+      .play-btn{ justify-self:start; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="logo">FLIPSIDE</div>
+    <nav>
+      <!-- Update these hrefs to match your site -->
+      <a href="index.html">Home</a>
+      <a href="gigs.html">Gigs</a>
+      <a href="songlist.html" style="background:var(--panel2); border-color:var(--line);">Song List</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-title">
+    <div>
+      <h1>Song List</h1>
+      <div class="subtitle">Search or filter our set. Click Play for a Spotify preview/player.</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input id="searchBox" type="text" placeholder="Search by song or artist..." />
+    <select id="yearFilter">
+      <option value="all">All years</option>
+    </select>
+    <select id="sortBy">
+      <option value="song">Sort: Song (A–Z)</option>
+      <option value="artist">Sort: Artist (A–Z)</option>
+      <option value="yearDesc">Sort: Year (newest)</option>
+      <option value="yearAsc">Sort: Year (oldest)</option>
+    </select>
+    <button class="pill" id="clearBtn">Clear</button>
+  </div>
+
+  <div class="list" id="songList"></div>
+
+</main>
+
+<script>
+  // ==== EDIT YOUR SET LIST HERE ====
+  // Add Spotify track URLs if you want embeds.
+  // Example URL format:
+  // https://open.spotify.com/track/<TRACK_ID>
+  const songs = [
+    {
+      song: "The Boys Are Back In Town",
+      artist: "Thin Lizzy",
+      year: 1976,
+      spotifyUrl: "https://open.spotify.com/track/5vkCnskRAaFgfMfbAwMYRp?si=ca4ad108ef7643f9"
+    },
+    {
+      song: "Sweet Home Alabama",
+      artist: "Lynard Skynard",
+      year: 1974,
+      spotifyUrl: "https://open.spotify.com/track/6YlOxoHWLjH6uVQvxUIUug?si=04e5eb9511d54ddb"
+    },
+    {
+      song: "Barracuda",
+      artist: "Heart",
+      year: 1977,
+      spotifyUrl: "https://open.spotify.com/track/7e89621JPkKaeDSTQ3avtg?si=541b50872c904359"
+    }
+  ];
+  // ================================
+
+  const listEl = document.getElementById("songList");
+  const searchBox = document.getElementById("searchBox");
+  const yearFilter = document.getElementById("yearFilter");
+  const sortBy = document.getElementById("sortBy");
+  const clearBtn = document.getElementById("clearBtn");
+
+  function spotifyEmbedSrc(url){
+    // accept either full open.spotify.com track link or spotify:track:ID
+    if(!url) return "";
+    if(url.includes("open.spotify.com/track/")){
+      const id = url.split("track/")[1].split("?")[0];
+      return `https://open.spotify.com/embed/track/${id}`;
+    }
+    if(url.startsWith("spotify:track:")){
+      const id = url.split("spotify:track:")[1];
+      return `https://open.spotify.com/embed/track/${id}`;
+    }
+    return ""; // unsupported
+  }
+
+  function buildYearFilter(){
+    const years = [...new Set(songs.map(s => s.year).filter(Boolean))].sort((a,b)=>a-b);
+    years.forEach(y=>{
+      const opt = document.createElement("option");
+      opt.value = String(y);
+      opt.textContent = y;
+      yearFilter.appendChild(opt);
+    });
+  }
+
+  function render(){
+    const q = searchBox.value.trim().toLowerCase();
+    const yf = yearFilter.value;
+    const sb = sortBy.value;
+
+    let filtered = songs.filter(s=>{
+      const matchesQ = !q ||
+        s.song.toLowerCase().includes(q) ||
+        s.artist.toLowerCase().includes(q);
+      const matchesYear = (yf==="all") || (String(s.year)===yf);
+      return matchesQ && matchesYear;
+    });
+
+    filtered.sort((a,b)=>{
+      if(sb==="song") return a.song.localeCompare(b.song);
+      if(sb==="artist") return a.artist.localeCompare(b.artist);
+      if(sb==="yearAsc") return (a.year||0)-(b.year||0);
+      if(sb==="yearDesc") return (b.year||0)-(a.year||0);
+      return 0;
+    });
+
+    listEl.innerHTML = "";
+    filtered.forEach((s, i)=>{
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const title = document.createElement("div");
+      title.className = "cell-title";
+      title.textContent = s.song;
+
+      const artist = document.createElement("div");
+      artist.className = "cell-artist";
+      artist.textContent = s.artist;
+
+      const year = document.createElement("div");
+      year.className = "cell-year";
+      year.textContent = s.year || "";
+
+      const play = document.createElement("button");
+      play.className = "play-btn";
+      play.type = "button";
+
+      const embedSrc = spotifyEmbedSrc(s.spotifyUrl);
+      play.textContent = embedSrc ? "Play" : "No embed";
+
+      play.disabled = !embedSrc;
+      play.addEventListener("click", ()=>{
+        row.classList.toggle("expanded");
+        play.textContent = row.classList.contains("expanded") ? "Hide Player" : "Play";
+      });
+
+      const embedWrap = document.createElement("div");
+      embedWrap.className = "embed-wrap";
+      if(embedSrc){
+        embedWrap.innerHTML = `
+          <iframe
+            class="spotify"
+            src="${embedSrc}"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            title="Spotify player for ${s.song}"></iframe>`;
+      }
+
+      row.appendChild(title);
+      row.appendChild(artist);
+      row.appendChild(year);
+      row.appendChild(play);
+      row.appendChild(embedWrap);
+
+      listEl.appendChild(row);
+    });
+
+    if(filtered.length===0){
+      listEl.innerHTML = `<div class="row" style="grid-template-columns:1fr;">
+        No songs match that search/filter.
+      </div>`;
+    }
+  }
+
+  searchBox.addEventListener("input", render);
+  yearFilter.addEventListener("change", render);
+  sortBy.addEventListener("change", render);
+  clearBtn.addEventListener("click", ()=>{
+    searchBox.value = "";
+    yearFilter.value = "all";
+    sortBy.value = "song";
+    render();
+  });
+
+  buildYearFilter();
+  render();
+</script>
+
+</body>
+</html>
