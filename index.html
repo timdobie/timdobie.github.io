@@ -18,6 +18,7 @@
       --muted: #b9b9b9;
       --accent: #e74c3c;
       --link: #7cc0ff;
+      --line: #2a2a38;
     }
 
     * { box-sizing: border-box; }
@@ -68,6 +69,24 @@
     .menu-left {
       display: flex;
       gap: 10px;
+    }
+
+    .menu-left a{
+      text-decoration: none;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      background: transparent;
+      border: 1px solid transparent;
+      display: inline-block;
+    }
+
+    .menu-left a:hover{
+      border-color: var(--line);
+      background: var(--panel);
+      text-decoration: none; /* overrides global a:hover underline */
     }
 
     .menu-right {
