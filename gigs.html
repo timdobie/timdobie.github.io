@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Flipside — Gigs</title>
+
+  <style>
+    :root {
+      --maxw: 1100px;
+      --gap: 16px;
+      --pad: 18px;
+      --radius: 12px;
+      --bg: #0b0b0c;
+      --panel: #141416;
+      --panel2: #101012;
+      --text: #f2f2f2;
+      --muted: #b9b9b9;
+      --accent-purple: #b57bff;
+      --link: #7cc0ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: var(--gap);
+      display: grid;
+      gap: var(--gap);
+    }
+
+    header.banner {
+      padding: 12px 0 6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    header.banner h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      letter-spacing: .5px;
+    }
+    header.banner .back {
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      min-width: 0;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px 0;
+      font-size: 1.2rem;
+    }
+    .muted { color: var(--muted); }
+
+    /* Gigs list + cards */
+    .gigs-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .gig-card {
+      background: var(--panel2);
+      border-radius: 10px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 12px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .gig-when {
+      font-weight: 700;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+    .gig-when .time {
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .gig-where {
+      min-width: 0;
+    }
+    .gig-where .venue {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--accent-purple);
+    }
+    .gig-where .address {
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .gig-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #1a1a1d;
+      border: 1px solid #2a2a2e;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      text-align:center;
+    }
+    .btn.purple {
+      background: var(--accent-purple);
+      color: #0b0b0c;
+      border-color: transparent;
+    }
+
+    /* Poster thumb (same size as map) */
+    .poster-thumb-wrap {
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .poster-thumb {
+      width: 100%;
+      height: 220px;            /* matches map height */
+      object-fit: contain;      /* no cropping */
+      background: #0d0d0f;
+      border-radius: 8px;
+      border: 1px solid #222;
+      display: block;
+    }
+    .poster-caption {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Map embed (hidden until toggled) */
+    .map-wrap {
+      margin-top: 10px;
+      display: none;
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 220px;
+      border: 0;
+      border-radius: 8px;
+      display:block;
+    }
+    .map-wrap.open { display:block; }
+
+    /* Poster lightbox modal */
+    .poster-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.88);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .poster-modal img {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 12px;
+      display:block;
+    }
+    #poster-close {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      color: #fff;
+      font-size: 40px;
+      cursor: pointer;
+      line-height:1;
+      user-select:none;
+    }
+
+    /* Mobile */
+    @media (max-width: 800px) {
+      .gig-card {
+        grid-template-columns: 1fr;
+      }
+      .gig-links {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        white-space: normal;
+      }
+      .gig-when { white-space: normal; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header class="banner">
+      <h1>Gigs</h1>
+      <a class="back" href="index.html">← Back to Home</a>
+    </header>
+
+    <div class="panel">
+      <h2>Next Shows</h2>
+      <div id="gigs-list" class="gigs-list"></div>
+
+      <p class="muted" style="margin-top:10px;">
+        Want The Flipside at your venue or event? Hit us up via Contact/Bookings on the home page.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Poster Modal (lightbox) -->
+  <div id="poster-modal" class="poster-modal">
+    <span id="poster-close">&times;</span>
+    <img id="poster-modal-img" alt="Gig Poster Full Size">
+  </div>
+
+  <script>
+    // ✅ EDIT THIS LIST ONLY
+    // posterThumb = smaller image, posterFull = full-size poster
+    const gigs = [
+      {
+        dayDate: "Wed 7th Jan 2026",
+        onStage: "9 pm",
+        venueName: "Here & Now Lounge",
+        address: "Upstairs, Above Kahn Curry Hut. Level 1, 97-99 Ryrie Street Street Geelong Vic",
+        mapsQuery: "Here and Now Lounge Geelong VIC 3220",
+        venueUrl: "https://https://hereandnowlounge.com.au/",
+        notes: "Free entry / 2 sets",
+        posterThumb: "images/HereAndNow07012026.png",
+        posterFull: "images/HereAndNow07012026.png"
+      }
+    ];
+
+    function mapsLink(q) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    }
+    function mapsEmbed(q) {
+      return `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
+    }
+
+    const list = document.getElementById("gigs-list");
+
+    gigs.forEach((g, i) => {
+      const card = document.createElement("div");
+      card.className = "gig-card";
+
+      card.innerHTML = `
+        <div class="gig-when">
+          <div>${g.dayDate}</div>
+          <div class="time">On stage: ${g.onStage}</div>
+        </div>
+
+        <div class="gig-where">
+          <div class="venue">${g.venueName}</div>
+          <div class="address">${g.address}</div>
+
+          ${g.notes ? `<div class="muted">${g.notes}</div>` : ""}
+
+          ${g.posterThumb ? `
+            <div class="poster-thumb-wrap" data-poster-thumb="${i}">
+              <img src="${g.posterThumb}" class="poster-thumb" alt="Gig Poster Thumbnail">
+              <div class="poster-caption">Tap/click to view full poster</div>
+            </div>
+          ` : ""}
+
+          <div id="map-${i}" class="map-wrap">
+            <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="${mapsEmbed(g.mapsQuery)}"></iframe>
+          </div>
+        </div>
+
+        <div class="gig-links">
+          <a class="btn purple" target="_blank" rel="noopener"
+             href="${mapsLink(g.mapsQuery)}">Open Map</a>
+
+          <button class="btn" type="button" data-map-btn="${i}">
+            Toggle Map
+          </button>
+
+          ${g.venueUrl ? `
+            <a class="btn" target="_blank" rel="noopener"
+               href="${g.venueUrl}">Venue Website</a>
+          ` : ""}
+        </div>
+      `;
+
+      list.appendChild(card);
+    });
+
+    // Toggle map buttons
+    document.querySelectorAll("[data-map-btn]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = btn.getAttribute("data-map-btn");
+        document.getElementById(`map-${i}`).classList.toggle("open");
+      });
+    });
+
+    // Poster lightbox
+    const posterModal = document.getElementById("poster-modal");
+    const posterModalImg = document.getElementById("poster-modal-img");
+    const posterClose = document.getElementById("poster-close");
+
+    document.querySelectorAll("[data-poster-thumb]").forEach(el => {
+      el.addEventListener("click", () => {
+        const i = el.getAttribute("data-poster-thumb");
+        posterModalImg.src = gigs[i].posterFull || gigs[i].posterThumb;
+        posterModal.style.display = "flex";
+      });
+    });
+
+    posterClose.addEventListener("click", () => {
+      posterModal.style.display = "none";
+    });
+
+    posterModal.addEventListener("click", (e) => {
+      if (e.target === posterModal) posterModal.style.display = "none";
+    });
+  </script>
+</body>
+</html>
