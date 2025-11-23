@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Flipside — Gigs</title>
+  <title>The Flip Side — Gigs</title>
 
   <style>
     :root {
@@ -18,6 +18,9 @@
       --muted: #b9b9b9;
       --accent-purple: #b57bff;
       --link: #7cc0ff;
+
+      /* Added to support song-page top menu styling only */
+      --line: #2a2a38;
     }
 
     * { box-sizing: border-box; }
@@ -30,6 +33,31 @@
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
+    /* === Top menu copied from songs.html (unchanged) === */
+    header.site-header{
+      position:sticky; top:0; z-index:5;
+      background:rgba(12,12,16,0.9);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .topbar{
+      max-width:1200px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; gap:14px;
+    }
+    .logo{
+      font-weight:800; letter-spacing:0.5px; font-size:20px;
+    }
+    nav{
+      margin-left:auto; display:flex; gap:10px; flex-wrap:wrap;
+    }
+    nav a{
+      text-decoration:none; color:var(--text);
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:14px;
+      background:transparent; border:1px solid transparent;
+    }
+    nav a:hover{ border-color:var(--line); background:var(--panel); }
+    /* ================================================ */
+
     .wrap {
       max-width: var(--maxw);
       margin: 0 auto;
@@ -38,6 +66,7 @@
       gap: var(--gap);
     }
 
+    /* Keeping original banner styling, but now it's title-only */
     header.banner {
       padding: 12px 0 6px;
       display:flex;
@@ -48,13 +77,6 @@
       margin: 0;
       font-size: 1.8rem;
       letter-spacing: .5px;
-    }
-    header.banner .back {
-      background: var(--panel);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      color: var(--text);
     }
 
     .panel {
@@ -234,11 +256,24 @@
 </head>
 
 <body>
+
+  <!-- Top menu EXACTLY like songs.html -->
+  <header class="site-header">
+    <div class="topbar">
+      <div class="logo">THE FLIP SIDE</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="gigs.html" style="background:var(--panel2); border-color:var(--line);">Gigs</a>
+        <a href="songlist.html">Song List</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="wrap">
 
+    <!-- Original title area kept, but without the back button -->
     <header class="banner">
       <h1>Gigs</h1>
-      <a class="back" href="index.html">← Back to Home</a>
     </header>
 
     <div class="panel">
