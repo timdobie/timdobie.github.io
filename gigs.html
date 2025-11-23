@@ -76,50 +76,53 @@
       gap: 12px;
     }
 
+    /* 3-column layout: info | map | poster */
     .gig-card {
       background: var(--panel2);
       border-radius: 10px;
       padding: 14px;
       display: grid;
-      grid-template-columns: 180px 1fr auto;
+      grid-template-columns: 1fr 220px 220px;  /* map & poster narrower */
       gap: 12px;
       align-items: start;
       min-width: 0;
     }
 
-    .gig-when {
-      font-weight: 700;
-      line-height: 1.4;
-      white-space: nowrap;
-    }
-    .gig-when .time {
-      margin-top: 6px;
-      font-weight: 600;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    .gig-where {
+    /* Left info stack */
+    .gig-info {
+      display: grid;
+      gap: 6px;
       min-width: 0;
     }
-    .gig-where .venue {
+
+    .gig-date {
+      font-size: 1.35rem;  /* larger Day/Date */
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+
+    .gig-venue {
       font-size: 1.1rem;
       font-weight: 800;
-      margin-bottom: 4px;
       color: var(--accent-purple);
-    }
-    .gig-where .address {
-      line-height: 1.4;
-      margin-bottom: 8px;
+      line-height: 1.3;
     }
 
-    .gig-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: flex-end;
-      white-space: nowrap;
-      min-width: 0;
+    .gig-address {
+      line-height: 1.4;
+    }
+
+    .gig-notes {
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .gig-time {
+      font-weight: 700;
+      color: var(--muted);
+      font-size: 0.98rem;
     }
 
     .btn {
@@ -132,6 +135,7 @@
       color: var(--text);
       cursor: pointer;
       text-align:center;
+      width: fit-content;
     }
     .btn.purple {
       background: var(--accent-purple);
@@ -139,15 +143,23 @@
       border-color: transparent;
     }
 
-    /* Poster thumb (same size as map) */
+    /* Map column (always visible) */
+    .gig-map iframe {
+      width: 100%;
+      height: 180px;       /* smaller height */
+      border: 0;
+      border-radius: 8px;
+      display:block;
+    }
+
+    /* Poster column (thumb always visible) */
     .poster-thumb-wrap {
-      margin-top: 10px;
       cursor: pointer;
     }
     .poster-thumb {
       width: 100%;
-      height: 220px;            /* matches map height */
-      object-fit: contain;      /* no cropping */
+      height: 180px;        /* match map height */
+      object-fit: contain;
       background: #0d0d0f;
       border-radius: 8px;
       border: 1px solid #222;
@@ -155,23 +167,10 @@
     }
     .poster-caption {
       margin-top: 6px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--muted);
+      text-align: center;
     }
-
-    /* Map embed (hidden until toggled) */
-    .map-wrap {
-      margin-top: 10px;
-      display: none;
-    }
-    .map-wrap iframe {
-      width: 100%;
-      height: 220px;
-      border: 0;
-      border-radius: 8px;
-      display:block;
-    }
-    .map-wrap.open { display:block; }
 
     /* Poster lightbox modal */
     .poster-modal {
@@ -203,17 +202,33 @@
     }
 
     /* Mobile */
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .gig-card {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
-      .gig-links {
-        align-items: flex-start;
-        flex-direction: row;
-        flex-wrap: wrap;
-        white-space: normal;
+      .gig-date { white-space: normal; }
+
+      /* Put map + poster side-by-side under the info */
+      .gig-media {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
       }
-      .gig-when { white-space: normal; }
+      .gig-map iframe,
+      .poster-thumb {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .gig-media {
+        grid-template-columns: 1fr;
+      }
+      .gig-map iframe,
+      .poster-thumb {
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -222,7 +237,7 @@
   <div class="wrap">
 
     <header class="banner">
-      <h1>Gigs</h1>
+      <h1>Upcoming Gigs</h1>
       <a class="back" href="index.html">← Back to Home</a>
     </header>
 
@@ -253,7 +268,7 @@
         venueName: "Here & Now Lounge",
         address: "Upstairs, Above Kahn Curry Hut. Level 1, 97-99 Ryrie Street Street Geelong Vic",
         mapsQuery: "Here and Now Lounge Geelong VIC 3220",
-        venueUrl: "https://https://hereandnowlounge.com.au/",
+        venueUrl: "https://hereandnowlounge.com.au/",
         notes: "Free entry / 2 sets",
         posterThumb: "images/HereAndNow07012026.png",
         posterFull: "images/HereAndNow07012026.png"
@@ -274,54 +289,34 @@
       card.className = "gig-card";
 
       card.innerHTML = `
-        <div class="gig-when">
-          <div>${g.dayDate}</div>
-          <div class="time">On stage: ${g.onStage}</div>
-        </div>
-
-        <div class="gig-where">
-          <div class="venue">${g.venueName}</div>
-          <div class="address">${g.address}</div>
-
-          ${g.notes ? `<div class="muted">${g.notes}</div>` : ""}
-
-          ${g.posterThumb ? `
-            <div class="poster-thumb-wrap" data-poster-thumb="${i}">
-              <img src="${g.posterThumb}" class="poster-thumb" alt="Gig Poster Thumbnail">
-              <div class="poster-caption">Tap/click to view full poster</div>
-            </div>
-          ` : ""}
-
-          <div id="map-${i}" class="map-wrap">
-            <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              src="${mapsEmbed(g.mapsQuery)}"></iframe>
-          </div>
-        </div>
-
-        <div class="gig-links">
-          <a class="btn purple" target="_blank" rel="noopener"
-             href="${mapsLink(g.mapsQuery)}">Open Map</a>
-
-          <button class="btn" type="button" data-map-btn="${i}">
-            Toggle Map
-          </button>
-
+        <div class="gig-info">
+          <div class="gig-date">${g.dayDate}</div>
+          <div class="gig-venue">${g.venueName}</div>
+          <div class="gig-address">${g.address}</div>
+          ${g.notes ? `<div class="gig-notes">${g.notes}</div>` : ""}
+          <div class="gig-time">On stage: ${g.onStage}</div>
           ${g.venueUrl ? `
-            <a class="btn" target="_blank" rel="noopener"
-               href="${g.venueUrl}">Venue Website</a>
+            <a class="btn purple" target="_blank" rel="noopener"
+               href="${g.venueUrl}">View Website</a>
+          ` : ""}
+          <a class="btn" target="_blank" rel="noopener"
+             href="${mapsLink(g.mapsQuery)}">Open Map</a>
+        </div>
+
+        <div class="gig-media gig-map">
+          <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="${mapsEmbed(g.mapsQuery)}"></iframe>
+        </div>
+
+        <div class="gig-media poster-thumb-wrap" data-poster-thumb="${i}">
+          ${g.posterThumb ? `
+            <img src="${g.posterThumb}" class="poster-thumb" alt="Gig Poster Thumbnail">
+            <div class="poster-caption">Tap/click to view full poster</div>
           ` : ""}
         </div>
       `;
 
       list.appendChild(card);
-    });
-
-    // Toggle map buttons
-    document.querySelectorAll("[data-map-btn]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const i = btn.getAttribute("data-map-btn");
-        document.getElementById(`map-${i}`).classList.toggle("open");
-      });
     });
 
     // Poster lightbox
