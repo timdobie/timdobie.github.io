@@ -282,6 +282,33 @@
       font-size: 0.9rem;
     }
 
+    .footer-credits {
+      margin-top: 30px;
+      padding: 16px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.85;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .footer-credits img {
+      height: 26px;            /* adjust logo size */
+      width: auto;
+      display: inline-block;
+      vertical-align: middle;
+      opacity: 0.9;
+    }
+
+    .footer-credits span {
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: var(--text);
+    }
+
+
     @media (max-width: 900px) {
       .content {
         grid-template-columns: 1fr;
@@ -450,7 +477,10 @@
     </main>
 
     <footer>
-      © <span id="year"></span> The Flip Side
+      <div class="footer-credits">
+        <img src="images/purple maiden logo mini.png" alt="Purple Maiden Productions Logo">
+        <span>© 2025 Purple Maiden Productions</span>
+      </div>
     </footer>
 
   </div>
