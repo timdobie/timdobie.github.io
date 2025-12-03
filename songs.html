@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Flip Side — Song List</title>
 
-  <!-- If your site already has a shared stylesheet, link it here:
-  <link rel="stylesheet" href="styles.css" />
-  -->
-
   <style>
     :root{
       --bg:#0c0c10;
@@ -16,7 +12,7 @@
       --panel2:#1a1a24;
       --text:#e9e9f1;
       --muted:#a9a9bd;
-      --purple:#7b3ff2;        /* match your Line Up purple vibe */
+      --purple:#7b3ff2;
       --purple2:#5a2bcf;
       --line:#2a2a38;
       --radius:14px;
@@ -32,7 +28,6 @@
       color:var(--text);
     }
 
-    /* Top bar */
     header{
       position:sticky; top:0; z-index:5;
       background:rgba(12,12,16,0.9);
@@ -67,7 +62,6 @@
     }
     .subtitle{ color:var(--muted); font-size:14px; margin-top:6px; }
 
-    /* Controls */
     .controls{
       display:flex; gap:10px; flex-wrap:wrap; align-items:center;
       background:var(--panel); border:1px solid var(--line);
@@ -84,10 +78,21 @@
       border:none; color:white; padding:9px 12px; border-radius:10px;
       font-weight:700; cursor:pointer; font-size:14px;
       box-shadow:0 8px 18px rgba(123,63,242,0.35);
+      white-space:nowrap;
     }
     .pill:active{ transform:translateY(1px); }
 
-    /* List */
+    .pill-secondary{
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
+    .pill-secondary:hover{
+      border-color:var(--purple);
+      box-shadow:0 0 0 3px rgba(123,63,242,0.15);
+    }
+
     .list{
       margin-top:12px;
       display:flex; flex-direction:column; gap:10px;
@@ -120,7 +125,6 @@
       box-shadow:0 0 0 3px rgba(123,63,242,0.15);
     }
 
-    /* Embedded player (collapsed/expanded) */
     .embed-wrap{
       grid-column:1 / -1;
       overflow:hidden;
@@ -128,7 +132,7 @@
       transition:max-height .25s ease;
     }
     .row.expanded .embed-wrap{
-      max-height:190px; /* enough for Spotify compact player */
+      max-height:190px;
       margin-top:8px;
     }
     iframe.spotify{
@@ -139,7 +143,6 @@
       background:#000;
     }
 
-    /* Responsive */
     @media (max-width: 820px){
       .row{
         grid-template-columns: 1fr;
@@ -156,7 +159,6 @@
   <div class="topbar">
     <div class="logo">THE FLIP SIDE</div>
     <nav>
-      <!-- Update these hrefs to match your site -->
       <a href="index.html">Home</a>
       <a href="gigs.html">Gigs</a>
       <a href="songs.html" style="background:var(--panel2); border-color:var(--line);">Song List</a>
@@ -184,6 +186,7 @@
       <option value="yearDesc">Sort: Year (newest)</option>
       <option value="yearAsc">Sort: Year (oldest)</option>
     </select>
+    <button class="pill-secondary pill" id="toggleAllBtn">Hide All Players</button>
     <button class="pill" id="clearBtn">Clear</button>
   </div>
 
@@ -192,10 +195,6 @@
 </main>
 
 <script>
-  // ==== EDIT YOUR SET LIST HERE ====
-  // Add Spotify track URLs if you want embeds.
-  // Example URL format:
-  // https://open.spotify.com/track/<TRACK_ID>
   const songs = [
     {
       song: "The Boys Are Back In Town",
@@ -438,16 +437,18 @@
       spotifyUrl: "https://open.spotify.com/track/2lRhq1ZfHNiaVNHkTWeXUv?si=10b47de75a384a30"
     }
   ];
-  // ================================
 
   const listEl = document.getElementById("songList");
   const searchBox = document.getElementById("searchBox");
   const yearFilter = document.getElementById("yearFilter");
   const sortBy = document.getElementById("sortBy");
   const clearBtn = document.getElementById("clearBtn");
+  const toggleAllBtn = document.getElementById("toggleAllBtn");
+
+  // global flag: are players currently shown by default?
+  let globalPlayersVisible = true;
 
   function spotifyEmbedSrc(url){
-    // accept either full open.spotify.com track link or spotify:track:ID
     if(!url) return "";
     if(url.includes("open.spotify.com/track/")){
       const id = url.split("track/")[1].split("?")[0];
@@ -457,7 +458,7 @@
       const id = url.split("spotify:track:")[1];
       return `https://open.spotify.com/embed/track/${id}`;
     }
-    return ""; // unsupported
+    return "";
   }
 
   function buildYearFilter(){
@@ -492,7 +493,15 @@
     });
 
     listEl.innerHTML = "";
-    filtered.forEach((s, i)=>{
+
+    if(filtered.length===0){
+      listEl.innerHTML = `<div class="row" style="grid-template-columns:1fr;">
+        No songs match that search/filter.
+      </div>`;
+      return;
+    }
+
+    filtered.forEach((s)=>{
       const row = document.createElement("div");
       row.className = "row";
 
@@ -513,16 +522,9 @@
       play.type = "button";
 
       const embedSrc = spotifyEmbedSrc(s.spotifyUrl);
-      play.textContent = embedSrc ? "Play" : "No embed";
-      play.disabled = !embedSrc;
-
-      play.addEventListener("click", ()=>{
-        row.classList.toggle("expanded");
-        play.textContent = row.classList.contains("expanded") ? "Hide Player" : "Play";
-      });
-
       const embedWrap = document.createElement("div");
       embedWrap.className = "embed-wrap";
+
       if(embedSrc){
         embedWrap.innerHTML = `
           <iframe
@@ -531,13 +533,26 @@
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
             title="Spotify player for ${s.song}"></iframe>`;
+
+        // set initial state based on global flag
+        if(globalPlayersVisible){
+          row.classList.add("expanded");
+          play.textContent = "Hide Player";
+        } else {
+          row.classList.remove("expanded");
+          play.textContent = "Play";
+        }
+        play.disabled = false;
+      } else {
+        play.textContent = "No embed";
+        play.disabled = true;
       }
 
-      // NEW: show the player by default when there is an embed
-      if (embedSrc){
-        row.classList.add("expanded");
-        play.textContent = "Hide Player";
-      }
+      play.addEventListener("click", ()=>{
+        if(!embedSrc) return;
+        row.classList.toggle("expanded");
+        play.textContent = row.classList.contains("expanded") ? "Hide Player" : "Play";
+      });
 
       row.appendChild(title);
       row.appendChild(artist);
@@ -547,13 +562,30 @@
 
       listEl.appendChild(row);
     });
-
-    if(filtered.length===0){
-      listEl.innerHTML = `<div class="row" style="grid-template-columns:1fr;">
-        No songs match that search/filter.
-      </div>`;
-    }
   }
+
+  function updateToggleAllButtonText(){
+    toggleAllBtn.textContent = globalPlayersVisible ? "Hide All Players" : "Show All Players";
+  }
+
+  toggleAllBtn.addEventListener("click", ()=>{
+    globalPlayersVisible = !globalPlayersVisible;
+    const rows = document.querySelectorAll("#songList .row");
+    rows.forEach(row=>{
+      const embed = row.querySelector(".embed-wrap iframe.spotify");
+      const playBtn = row.querySelector(".play-btn");
+      if(!embed || !playBtn || playBtn.disabled) return;
+
+      if(globalPlayersVisible){
+        row.classList.add("expanded");
+        playBtn.textContent = "Hide Player";
+      } else {
+        row.classList.remove("expanded");
+        playBtn.textContent = "Play";
+      }
+    });
+    updateToggleAllButtonText();
+  });
 
   searchBox.addEventListener("input", render);
   yearFilter.addEventListener("change", render);
@@ -566,6 +598,7 @@
   });
 
   buildYearFilter();
+  updateToggleAllButtonText();
   render();
 </script>
 
