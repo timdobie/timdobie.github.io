@@ -359,79 +359,79 @@
       year: 1977,
       spotifyUrl: "https://open.spotify.com/track/4TTxKh1FnnGEeGWK2s8xBa?si=efc29438e0344b03"
     },
-        {
+    {
       song: "Time",
       artist: "Pink Floyd",
       year: 1973,
       spotifyUrl: "https://open.spotify.com/track/3TO7bbrUKrOSPGRTB5MeCz?si=36c289e98d604fda"
     },
-        {
+    {
       song: "Immigrant Song",
       artist: "Led Zeppelin",
       year: 1970,
       spotifyUrl: "https://open.spotify.com/track/78lgmZwycJ3nzsdgmPPGNx?si=44307958a3524453"
     },
-        {
+    {
       song: "Layla",
       artist: "Derick And The Dominos",
       year: 1970,
       spotifyUrl: "https://open.spotify.com/track/2kkvB3RNRzwjFdGhaUA0tz?si=6789dd5241aa40c5"
     },
-        {
+    {
       song: "Lola",
       artist: "The Kinks",
       year: 1970,
       spotifyUrl: "https://open.spotify.com/track/4Tjs8b6jL1s18sjURJtswp?si=2285ac586b99416e"
     },
-        {
+    {
       song: "Brown Sugar",
       artist: "The Rolling Stones",
       year: 1971,
       spotifyUrl: "https://open.spotify.com/track/61UuPxxYUvacEH6SHIK3sU?si=9ada1682a02e43e9"
     },
-        {
+    {
       song: "Old Time Rock and Roll",
       artist: "Bob Seager",
       year: 1978,
       spotifyUrl: "https://open.spotify.com/track/5EOoMWIB9iK4ZpcSex9Ec7?si=605f191696524c0d"
     },
-        {
+    {
       song: "Cant Get Enough",
       artist: "Bad Company",
       year: 1974,
       spotifyUrl: "https://open.spotify.com/track/6n5lHdpuBDdA7pYDpiKzEI?si=833a33deeb2b4919"
     },
-        {
+    {
       song: "Down Down",
       artist: "Status Quo",
       year: 1977,
       spotifyUrl: "https://open.spotify.com/track/0tzk7eYdvbXTiDIhU65EWO?si=66c9c42dd2434204"
     },
-        {
+    {
       song: "Black Night",
       artist: "Deep Purple",
       year: 1970,
       spotifyUrl: "https://open.spotify.com/track/2c1ccPqUnFYD8W7LY65bKG?si=acf44237403c437f"
     },
-        {
+    {
       song: "More Than A Feeling",
       artist: "Boston",
       year: 1976,
       spotifyUrl: "https://open.spotify.com/track/1QEEqeFIZktqIpPI4jSVSF?si=34ded509429b47d5"
     },
-        {
+    {
       song: "Livin In The 70s",
       artist: "Skyhooks",
       year: 1974,
       spotifyUrl: "https://open.spotify.com/track/4xd2I8L75IoTzX5bezbP2m?si=fdeb77cb5a604f2f"
     },
-        {
+    {
       song: "Mist Mountain Hop",
       artist: "Led Zeppelin",
       year: 1972,
       spotifyUrl: "https://open.spotify.com/track/3frf3zTgzt3YIx9ylpUoqU?si=b7ace71f9b244090"
     },
-        {
+    {
       song: "Long Live Rock and Roll",
       artist: "Rainbow",
       year: 1977,
@@ -514,8 +514,8 @@
 
       const embedSrc = spotifyEmbedSrc(s.spotifyUrl);
       play.textContent = embedSrc ? "Play" : "No embed";
-
       play.disabled = !embedSrc;
+
       play.addEventListener("click", ()=>{
         row.classList.toggle("expanded");
         play.textContent = row.classList.contains("expanded") ? "Hide Player" : "Play";
@@ -531,6 +531,12 @@
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
             title="Spotify player for ${s.song}"></iframe>`;
+      }
+
+      // NEW: show the player by default when there is an embed
+      if (embedSrc){
+        row.classList.add("expanded");
+        play.textContent = "Hide Player";
       }
 
       row.appendChild(title);
