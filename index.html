@@ -375,6 +375,8 @@
       font-weight: 800;
       cursor: pointer;
       text-align: left;
+      flex-direction: column;
+      align-items: stretch;
     }
     .photo-gig-btn:hover{
       background: #0d0d10;
@@ -384,6 +386,35 @@
       color: var(--muted);
       font-size: 0.9rem;
       white-space: nowrap;
+    }
+    .photo-gig-btn-top{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .photo-gig-thumbs{
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .photo-gig-thumb{
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #0b0b0c;
+      display: block;
+    }
+
+    @media (max-width: 700px){
+      .photo-gig-thumbs{
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     /* Fullscreen gallery modal */

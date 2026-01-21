@@ -168,7 +168,25 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "photo-gig-btn";
-      btn.innerHTML = `<span>${meta.title || folder}</span><span class="sub">${(meta.dd && meta.mm && meta.yyyy) ? `${meta.dd}/${meta.mm}/${meta.yyyy}` : ""}</span>`;
+
+      const thumbsToShow = 4;
+
+      const thumbHtml = (g.images || [])
+        .slice(0, thumbsToShow)
+        .map(fn => `<img class="photo-gig-thumb" src="${BASE_PATH}/${folder}/${fn}" alt="">`)
+        .join("");
+
+      btn.innerHTML = `
+        <div class="photo-gig-btn-top">
+          <div>${meta.title || folder}</div>
+          <div class="sub">${(meta.dd && meta.mm && meta.yyyy) ? `${meta.dd}/${meta.mm}/${meta.yyyy}` : ""}</div>
+        </div>
+
+        <div class="photo-gig-thumbs">
+          ${thumbHtml}
+        </div>
+      `;
+
       btn.addEventListener("click", () => API.openGigGallery(folder));
       host.appendChild(btn);
     });
