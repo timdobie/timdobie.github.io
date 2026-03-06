@@ -108,6 +108,36 @@
       min-width: 0;
     }
 
+    /* Past gigs keep layout but use a softer visual treatment */
+    .gig-card.past-gig {
+      background: #0d0d10;
+      border: 1px solid #1e1e25;
+    }
+    .gig-card.past-gig .gig-date {
+      color: #d2d2d2;
+    }
+    .gig-card.past-gig .gig-venue {
+      color: #8e77af;
+    }
+    .gig-card.past-gig .gig-address,
+    .gig-card.past-gig .gig-notes,
+    .gig-card.past-gig .gig-time {
+      color: #9e9eaa;
+    }
+    .gig-card.past-gig .btn.purple {
+      background: #6b5a86;
+      color: #ece9f2;
+    }
+    .gig-card.past-gig .btn.photos {
+      background: #141419;
+      border-color: #23232b;
+      color: #c8c8d2;
+    }
+    .gig-card.past-gig .poster-thumb,
+    .gig-card.past-gig .gig-map iframe {
+      filter: saturate(0.72) brightness(0.88);
+    }
+
     /* Left info stack */
     .gig-info {
       display: grid;
@@ -407,6 +437,7 @@
     // posterThumb = smaller image, posterFull = full-size poster
     const gigs = [
       {
+        date: "2026-03-21",
         dayDate: "Saturday 21st March 2026",
         onStage: "8 pm",
         venueName: "The Green Room Wine and Whiskey Bar",
@@ -418,6 +449,7 @@
         posterFull: "images/gigs/GreenRoom21032026sml.png"
       },
       {
+        date: "2026-04-03",
         dayDate: "Friday 3rd April 2026",
         onStage: "8 pm",
         venueName: "Bancoora Life Saving Club",
@@ -429,6 +461,7 @@
         posterFull: "images/gigs/Banny03042026.png"
       },
       {
+        date: "2026-01-07",
         dayDate: "Wed 7th Jan 2026",
         onStage: "9 pm",
         venueName: "Here & Now Lounge",
@@ -450,10 +483,16 @@
     }
 
     const list = document.getElementById("gigs-list");
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     gigs.forEach((g, i) => {
       const card = document.createElement("div");
       card.className = "gig-card";
+      const gigDate = g.date ? new Date(`${g.date}T00:00:00`) : null;
+      if (gigDate && gigDate < today) {
+        card.classList.add("past-gig");
+      }
 
       card.innerHTML = `
         <div class="gig-info">
