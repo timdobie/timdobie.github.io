@@ -541,7 +541,7 @@
       </div>
 
       <div class="menu-right">
-        <a class="nextgig-btn" href="#next-gig">Next Gig - Sat March 21st : The Green Room</a>
+        <a class="nextgig-btn" href="#next-gig" data-next-gig-link>Next Gig</a>
       </div>
     </nav>
 
@@ -656,8 +656,7 @@
 
         <div class="panel" id="next-gig">
           <h2>Next Gig</h2>
-          <!--<img src="images/wereWorkingOnIt.png" alt="WE ARE WORKING ON IT!" class="next-gig-img">-->
-          <img src="images/gigs/GreenRoom21032026sml.png" alt="Sat March 21st - The Green Room" class="next-gig-img">
+          <img src="images/wereWorkingOnIt.png" alt="We Are Working On It" class="next-gig-img" data-next-gig-image>
         </div>
 
         <div class="panel" id="media">
@@ -721,9 +720,14 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
+  <script src="gig-data.js"></script>
   <script src="photos-manifest.js"></script>
   <script src="photos-gallery.js"></script>
   <script>
+    if (window.FlipSideGigs && window.FlipSideGigs.renderHomeNextGig){
+      window.FlipSideGigs.renderHomeNextGig();
+    }
+
     // Build the Photos buttons on the home page
     if (window.FlipSidePhotos && window.FlipSidePhotos.renderGigButtons){
       window.FlipSidePhotos.renderGigButtons("photo-gig-buttons");

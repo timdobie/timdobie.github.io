@@ -432,9 +432,10 @@
     <img id="poster-modal-img" alt="Gig Poster Full Size">
   </div>
 
+  <script src="gig-data.js"></script>
   <script>
     // ✅ EDIT THIS LIST ONLY
-    // posterThumb = smaller image, posterFull = full-size poster
+    // Edit gig-data.js instead.
     const gigs = [
       {
         date: "2026-03-21",
@@ -546,6 +547,24 @@
 
     posterModal.addEventListener("click", (e) => {
       if (e.target === posterModal) posterModal.style.display = "none";
+    });
+  </script>
+
+  <script>
+    const renderedGigs = window.FlipSideGigs
+      ? window.FlipSideGigs.renderGigsList("gigs-list")
+      : [];
+    const posterModalEl = document.getElementById("poster-modal");
+    const posterModalImgEl = document.getElementById("poster-modal-img");
+
+    document.querySelectorAll("[data-poster-index]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const index = Number(el.getAttribute("data-poster-index"));
+        const gig = renderedGigs[index];
+        if (!gig) return;
+        posterModalImgEl.src = gig.posterFull || gig.posterThumb;
+        posterModalEl.style.display = "flex";
+      });
     });
   </script>
 
