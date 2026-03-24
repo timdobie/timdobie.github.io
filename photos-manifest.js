@@ -1,9 +1,20 @@
 ﻿// photos-manifest.js
 // AUTO-GENERATED - do not edit by hand
-// Generated: 2026-01-12 13:47:12
+// Generated: 2026-03-25 09:14:28
 // Source: Images/Photos/<GigFolder>/*.jpg
 
 window.FLIPSIDE_PHOTOS = [
+  {
+    folder: "GreenRoom21032026",
+    images: [
+      "652770681_1152117100278280_4083979375867133034_n.jpg",
+      "653312192_1995375937681720_1117851851432902536_n.jpg",
+      "653404293_954929240442974_1008513772096819172_n.jpg",
+      "653920032_1842256933147884_206858653786011624_n.jpg",
+      "654210106_1249701663438483_2620064700722820088_n.jpg",
+      "655089098_1682340666230858_985616545810869812_n.jpg"
+    ]
+  },
   {
     folder: "HereAndNowLounge07012026",
     images: [
