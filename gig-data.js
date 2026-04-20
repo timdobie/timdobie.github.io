@@ -11,7 +11,21 @@
 
   // Edit this list only when adding or changing gigs.
   const gigs = [
-      {
+    {
+      date: "2026-08-07",
+      dayDate: "Friday 7th August 2026",
+      shortLabel: "Fri Aug 7th",
+      onStage: "8 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/GreenRoom07082026sml.png",
+      posterFull: "images/gigs/GreenRoom07082026sml.png"
+    },
+    {
       date: "2026-06-12",
       dayDate: "Friday 12th June 2026",
       shortLabel: "Fri June 12th",
