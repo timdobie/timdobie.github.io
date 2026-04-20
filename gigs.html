@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>The Flip Side — Gigs</title>
 
   <style>
@@ -432,23 +435,19 @@
     <img id="poster-modal-img" alt="Gig Poster Full Size">
   </div>
 
-  <script src="gig-data.js?v=20260417a"></script>
   <script>
-    const renderedGigs = window.FlipSideGigs
-      ? window.FlipSideGigs.renderGigsList("gigs-list")
-      : [];
-    const posterModalEl = document.getElementById("poster-modal");
-    const posterModalImgEl = document.getElementById("poster-modal-img");
+    window.FLIPSIDE_ASSET_VERSION = `${Date.now()}`;
 
-    document.querySelectorAll("[data-poster-index]").forEach((el) => {
-      el.addEventListener("click", () => {
-        const index = Number(el.getAttribute("data-poster-index"));
-        const gig = renderedGigs[index];
-        if (!gig) return;
-        posterModalImgEl.src = gig.posterFull || gig.posterThumb;
-        posterModalEl.style.display = "flex";
+    function loadFreshScript(path) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        const separator = path.includes("?") ? "&" : "?";
+        script.src = `${path}${separator}v=${encodeURIComponent(window.FLIPSIDE_ASSET_VERSION)}`;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load ${path}`));
+        document.body.appendChild(script);
       });
-    });
+    }
   </script>
 
   <!-- ===== Photos Gallery Modal ===== -->
@@ -472,19 +471,40 @@
   </div>
   <!-- =============================== -->
 
-
-  <script src="photos-manifest.js"></script>
-  <script src="photos-gallery.js"></script>
   <script>
-    // Hook up Photos buttons on gig cards
-    document.addEventListener("click", (e) => {
-      const a = e.target.closest("[data-photos-folder]");
-      if (!a) return;
-      e.preventDefault();
-      const folder = a.getAttribute("data-photos-folder");
-      if (window.FlipSidePhotos && window.FlipSidePhotos.openGigGallery){
-        window.FlipSidePhotos.openGigGallery(folder);
-      }
+    (async () => {
+      await loadFreshScript("gig-data.js");
+      await loadFreshScript("photos-manifest.js");
+      await loadFreshScript("photos-gallery.js");
+
+      const renderedGigs = window.FlipSideGigs
+        ? window.FlipSideGigs.renderGigsList("gigs-list")
+        : [];
+      const posterModalEl = document.getElementById("poster-modal");
+      const posterModalImgEl = document.getElementById("poster-modal-img");
+
+      document.querySelectorAll("[data-poster-index]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const index = Number(el.getAttribute("data-poster-index"));
+          const gig = renderedGigs[index];
+          if (!gig) return;
+          posterModalImgEl.src = window.FlipSideGigs.assetUrl(gig.posterFull || gig.posterThumb);
+          posterModalEl.style.display = "flex";
+        });
+      });
+
+      // Hook up Photos buttons on gig cards
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest("[data-photos-folder]");
+        if (!a) return;
+        e.preventDefault();
+        const folder = a.getAttribute("data-photos-folder");
+        if (window.FlipSidePhotos && window.FlipSidePhotos.openGigGallery){
+          window.FlipSidePhotos.openGigGallery(folder);
+        }
+      });
+    })().catch((error) => {
+      console.error("Unable to load gigs assets.", error);
     });
   </script>
 

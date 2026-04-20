@@ -2,6 +2,10 @@
   const VENUE_TIME_ZONE = "Australia/Melbourne";
   const ROLLOVER_HOUR = 22;
   const ROLLOVER_MINUTE = 30;
+  const ASSET_VERSION =
+    typeof window !== "undefined" && window.FLIPSIDE_ASSET_VERSION
+      ? String(window.FLIPSIDE_ASSET_VERSION)
+      : "";
   const WORKING_ON_IT = {
     title: "We Are Working On It",
     buttonLabel: "Next Gig - We Are Working On It",
@@ -149,6 +153,13 @@
     return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
   }
 
+  function assetUrl(path) {
+    if (!path || !ASSET_VERSION) return path;
+    if (/^(?:[a-z]+:)?\/\//i.test(path) || path.startsWith("data:")) return path;
+    const separator = path.includes("?") ? "&" : "?";
+    return `${path}${separator}v=${encodeURIComponent(ASSET_VERSION)}`;
+  }
+
   function renderHomeNextGig(options = {}) {
     const nextGig = getNextGig(options.now);
     const button = document.querySelector(options.buttonSelector || "[data-next-gig-link]");
@@ -163,10 +174,10 @@
     if (!image) return;
 
     if (nextGig) {
-      image.src = nextGig.posterThumb || nextGig.posterFull;
+      image.src = assetUrl(nextGig.posterThumb || nextGig.posterFull);
       image.alt = `${nextGig.shortLabel} - ${nextGig.venueShort || nextGig.venueName}`;
     } else {
-      image.src = WORKING_ON_IT.image;
+      image.src = assetUrl(WORKING_ON_IT.image);
       image.alt = WORKING_ON_IT.alt;
     }
   }
@@ -206,7 +217,7 @@
         </div>
         <div class="gig-media poster-thumb-wrap" data-poster-index="${index}">
           ${gig.posterThumb ? `
-            <img src="${gig.posterThumb}" class="poster-thumb" alt="Gig Poster Thumbnail">
+            <img src="${assetUrl(gig.posterThumb)}" class="poster-thumb" alt="Gig Poster Thumbnail">
             <div class="poster-caption">Tap/click to view full poster</div>
           ` : ""}
         </div>
@@ -225,6 +236,7 @@
     getNextGig,
     getSortedGigs,
     isPastGig,
+    assetUrl,
     mapsLink,
     mapsEmbed,
     renderHomeNextGig,
