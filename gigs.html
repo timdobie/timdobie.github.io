@@ -430,8 +430,8 @@
   </div>
 
   <!-- Poster Modal (lightbox) -->
-  <div id="poster-modal" class="poster-modal">
-    <span id="poster-close">&times;</span>
+  <div id="poster-modal" class="poster-modal" aria-hidden="true">
+    <span id="poster-close" role="button" aria-label="Close poster" tabindex="0">&times;</span>
     <img id="poster-modal-img" alt="Gig Poster Full Size">
   </div>
 
@@ -482,15 +482,46 @@
         : [];
       const posterModalEl = document.getElementById("poster-modal");
       const posterModalImgEl = document.getElementById("poster-modal-img");
+      const posterCloseEl = document.getElementById("poster-close");
+
+      function closePosterModal() {
+        posterModalEl.style.display = "none";
+        posterModalEl.setAttribute("aria-hidden", "true");
+        posterModalImgEl.removeAttribute("src");
+      }
+
+      function openPosterModal(src) {
+        posterModalImgEl.src = src;
+        posterModalEl.style.display = "flex";
+        posterModalEl.setAttribute("aria-hidden", "false");
+        posterCloseEl.focus();
+      }
 
       document.querySelectorAll("[data-poster-index]").forEach((el) => {
         el.addEventListener("click", () => {
           const index = Number(el.getAttribute("data-poster-index"));
           const gig = renderedGigs[index];
           if (!gig) return;
-          posterModalImgEl.src = window.FlipSideGigs.assetUrl(gig.posterFull || gig.posterThumb);
-          posterModalEl.style.display = "flex";
+          openPosterModal(window.FlipSideGigs.assetUrl(gig.posterFull || gig.posterThumb));
         });
+      });
+
+      posterCloseEl.addEventListener("click", closePosterModal);
+      posterCloseEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          closePosterModal();
+        }
+      });
+      posterModalEl.addEventListener("click", (event) => {
+        if (event.target === posterModalEl) {
+          closePosterModal();
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && posterModalEl.style.display === "flex") {
+          closePosterModal();
+        }
       });
 
       // Hook up Photos buttons on gig cards
