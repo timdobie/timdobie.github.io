@@ -237,11 +237,15 @@
       align-items: center;
       padding: 20px;
     }
+    .poster-modal.open {
+      display: flex;
+    }
     .poster-modal img {
       max-width: 92%;
       max-height: 92%;
       border-radius: 12px;
       display:block;
+      cursor: zoom-out;
     }
     #poster-close {
       position: absolute;
@@ -252,6 +256,10 @@
       cursor: pointer;
       line-height:1;
       user-select:none;
+      z-index: 1;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.45);
     }
 
     /* Mobile */
@@ -485,14 +493,14 @@
       const posterCloseEl = document.getElementById("poster-close");
 
       function closePosterModal() {
-        posterModalEl.style.display = "none";
+        posterModalEl.classList.remove("open");
         posterModalEl.setAttribute("aria-hidden", "true");
         posterModalImgEl.removeAttribute("src");
       }
 
       function openPosterModal(src) {
         posterModalImgEl.src = src;
-        posterModalEl.style.display = "flex";
+        posterModalEl.classList.add("open");
         posterModalEl.setAttribute("aria-hidden", "false");
         posterCloseEl.focus();
       }
@@ -518,8 +526,9 @@
           closePosterModal();
         }
       });
+      posterModalImgEl.addEventListener("click", closePosterModal);
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && posterModalEl.style.display === "flex") {
+        if (event.key === "Escape" && posterModalEl.classList.contains("open")) {
           closePosterModal();
         }
       });
