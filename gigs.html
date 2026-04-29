@@ -91,6 +91,16 @@
       margin: 0 0 12px 0;
       font-size: 1.2rem;
     }
+    .booking-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .booking-cta h2 {
+      margin: 0;
+    }
     .muted { color: var(--muted); }
 
     /* Gigs list + cards */
@@ -398,11 +408,65 @@
       border-color: var(--accent-purple);
     }
 
+    .calendar-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: rgba(0,0,0,0.88);
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+    .calendar-modal.open {
+      display: flex;
+    }
+    .calendar-shell {
+      width: min(920px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .calendar-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--line);
+    }
+    .calendar-title {
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+    .calendar-close {
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+      user-select: none;
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+    .calendar-close:hover {
+      background: rgba(255,255,255,0.08);
+    }
+    .calendar-frame {
+      width: 100%;
+      height: min(70vh, 680px);
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
     @media (max-width: 700px){
       .gallery-main{ grid-template-columns: 44px 1fr 44px; }
       .gallery-nav{ height:44px; width:44px; font-size:22px; }
       .gallery-thumb{ height: 64px; }
       .gallery-img{ max-height: calc(100vh - 250px); }
+      .calendar-frame { height: 72vh; }
     }
 
   </style>
@@ -430,7 +494,10 @@
     </header>
 
     <div class="panel">
-      <h2>Want The Flip Side at your venue or event? Hit us up via Contact/Bookings on the home page.</h2>
+      <div class="booking-cta">
+        <h2>Want The Flip Side at your venue or event? Hit us up via <a href="index.html">Contact/Bookings</a> on the home page.</h2>
+        <button id="available-dates-btn" class="btn purple" type="button">Available Dates</button>
+      </div>
 
       <div id="gigs-list" class="gigs-list"></div>
     </div>
@@ -441,6 +508,21 @@
   <div id="poster-modal" class="poster-modal" aria-hidden="true">
     <span id="poster-close" role="button" aria-label="Close poster" tabindex="0">&times;</span>
     <img id="poster-modal-img" alt="Gig Poster Full Size">
+  </div>
+
+  <div id="calendar-modal" class="calendar-modal" aria-hidden="true">
+    <div class="calendar-shell" role="dialog" aria-modal="true" aria-labelledby="calendar-title">
+      <div class="calendar-topbar">
+        <div id="calendar-title" class="calendar-title">Available Dates</div>
+        <div id="calendar-close" class="calendar-close" role="button" aria-label="Close available dates" tabindex="0">&times;</div>
+      </div>
+      <iframe
+        class="calendar-frame"
+        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Australia%2FMelbourne&showPrint=0&showCalendars=0&showTz=0&showTitle=0&mode=AGENDA&src=ZmQ5OGNkYjUzM2E3YTNkOGQ5ZDFkOThjMTk0NGY4ZjUxMmU3Njc4MzQxOTBiMTkwNjNjM2QzMjViOWI3MDRkZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23009688"
+        title="The Flip Side available dates"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
   </div>
 
   <script>
@@ -491,6 +573,9 @@
       const posterModalEl = document.getElementById("poster-modal");
       const posterModalImgEl = document.getElementById("poster-modal-img");
       const posterCloseEl = document.getElementById("poster-close");
+      const availableDatesBtnEl = document.getElementById("available-dates-btn");
+      const calendarModalEl = document.getElementById("calendar-modal");
+      const calendarCloseEl = document.getElementById("calendar-close");
 
       function closePosterModal() {
         posterModalEl.classList.remove("open");
@@ -503,6 +588,17 @@
         posterModalEl.classList.add("open");
         posterModalEl.setAttribute("aria-hidden", "false");
         posterCloseEl.focus();
+      }
+
+      function closeCalendarModal() {
+        calendarModalEl.classList.remove("open");
+        calendarModalEl.setAttribute("aria-hidden", "true");
+      }
+
+      function openCalendarModal() {
+        calendarModalEl.classList.add("open");
+        calendarModalEl.setAttribute("aria-hidden", "false");
+        calendarCloseEl.focus();
       }
 
       document.querySelectorAll("[data-poster-index]").forEach((el) => {
@@ -526,10 +622,26 @@
           closePosterModal();
         }
       });
+      availableDatesBtnEl.addEventListener("click", openCalendarModal);
+      calendarCloseEl.addEventListener("click", closeCalendarModal);
+      calendarCloseEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          closeCalendarModal();
+        }
+      });
+      calendarModalEl.addEventListener("click", (event) => {
+        if (event.target === calendarModalEl) {
+          closeCalendarModal();
+        }
+      });
       posterModalImgEl.addEventListener("click", closePosterModal);
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && posterModalEl.classList.contains("open")) {
           closePosterModal();
+        }
+        if (event.key === "Escape" && calendarModalEl.classList.contains("open")) {
+          closeCalendarModal();
         }
       });
 
