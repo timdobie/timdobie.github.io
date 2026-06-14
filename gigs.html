@@ -441,6 +441,15 @@
     .calendar-title {
       font-weight: 800;
       letter-spacing: .3px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .calendar-brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
     }
     .calendar-close {
       font-size: 34px;
@@ -513,7 +522,7 @@
   <div id="calendar-modal" class="calendar-modal" aria-hidden="true">
     <div class="calendar-shell" role="dialog" aria-modal="true" aria-labelledby="calendar-title">
       <div class="calendar-topbar">
-        <div id="calendar-title" class="calendar-title">Available Dates</div>
+        <div id="calendar-title" class="calendar-title"><span class="calendar-brand">THE FLIP SIDE</span><span>- Available Dates</span></div>
         <div id="calendar-close" class="calendar-close" role="button" aria-label="Close available dates" tabindex="0">&times;</div>
       </div>
       <iframe
@@ -576,6 +585,7 @@
       const availableDatesBtnEl = document.getElementById("available-dates-btn");
       const calendarModalEl = document.getElementById("calendar-modal");
       const calendarCloseEl = document.getElementById("calendar-close");
+      const availableDatesHash = "#available-dates";
 
       function closePosterModal() {
         posterModalEl.classList.remove("open");
@@ -590,15 +600,29 @@
         posterCloseEl.focus();
       }
 
-      function closeCalendarModal() {
+      function closeCalendarModal({ updateHash = true } = {}) {
         calendarModalEl.classList.remove("open");
         calendarModalEl.setAttribute("aria-hidden", "true");
+        if (updateHash && window.location.hash === availableDatesHash) {
+          history.replaceState("", document.title, window.location.pathname + window.location.search);
+        }
       }
 
-      function openCalendarModal() {
+      function openCalendarModal({ updateHash = true } = {}) {
         calendarModalEl.classList.add("open");
         calendarModalEl.setAttribute("aria-hidden", "false");
+        if (updateHash && window.location.hash !== availableDatesHash) {
+          history.pushState("", document.title, availableDatesHash);
+        }
         calendarCloseEl.focus();
+      }
+
+      function syncCalendarModalWithHash() {
+        if (window.location.hash === availableDatesHash) {
+          openCalendarModal({ updateHash: false });
+        } else {
+          closeCalendarModal({ updateHash: false });
+        }
       }
 
       document.querySelectorAll("[data-poster-index]").forEach((el) => {
@@ -644,6 +668,9 @@
           closeCalendarModal();
         }
       });
+      window.addEventListener("hashchange", syncCalendarModalWithHash);
+      window.addEventListener("popstate", syncCalendarModalWithHash);
+      syncCalendarModalWithHash();
 
       // Hook up Photos buttons on gig cards
       document.addEventListener("click", (e) => {
