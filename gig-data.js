@@ -16,6 +16,62 @@
   // Edit this list only when adding or changing gigs.
   const gigs = [
     {
+      date: "2026-12-31",
+      dayDate: "Thursday 31st December 2026",
+      shortLabel: "Thurs Dec 31st",
+      onStage: "8 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/GreenRoom31122026sml.png",
+      posterFull: "images/gigs/GreenRoom31122026sml.png"
+    },
+    {
+      date: "2026-11-27",
+      dayDate: "Friday 27th November 2026",
+      shortLabel: "Fri Nov 27th",
+      onStage: "8 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/GreenRoom27112026sml.png",
+      posterFull: "images/gigs/GreenRoom27112026sml.png"
+    },
+    {
+      date: "2026-10-16",
+      dayDate: "Friday 16th October 2026",
+      shortLabel: "Fri Oct 16th",
+      onStage: "8 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/GreenRoom16102026sml.png",
+      posterFull: "images/gigs/GreenRoom16102026sml.png"
+    },
+    {
+      date: "2026-09-19",
+      dayDate: "Saturday 19th September 2026",
+      shortLabel: "Sat Sept 19th",
+      onStage: "8 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/GreenRoom19092026sml.png",
+      posterFull: "images/gigs/GreenRoom19092026sml.png"
+    },
+    {
       date: "2026-08-07",
       dayDate: "Friday 7th August 2026",
       shortLabel: "Fri Aug 7th",
