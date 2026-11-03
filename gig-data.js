@@ -15,6 +15,21 @@
 
   // Edit this list only when adding or changing gigs.
   const gigs = [
+      {
+      date: "2026-12-31",
+      dayDate: "New Years Eve",
+      shortLabel: "Thurs Dec 31st",
+      onStage: "7:30 pm",
+      venueName: "The Green Room Wine and Whiskey Bar",
+      venueShort: "The Green Room",
+      address: "94 Pakington St, Geelong West VIC 3218",
+      mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
+      venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "https://www.trybooking.com/au/event/new-years-eve-at-the-green-room-1675374?fbclid=IwY2xjawVWCnlleHRuA2FlbQIxMQBwZG9mBXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR-JWBsQZ7WgZ41VzHigzhqf04Aqh--G0biJXWpUJ0N4AKY_T6DCtACHbLGzdg_aem_VjIw0nrlXyRQJiSaMyZWWw",
+      notes: "Ticketed Event",
+      posterThumb: "images/gigs/GreenRoom31122026sml.png",
+      posterFull: "images/gigs/GreenRoom31122026sml.png"
+    },
     {
       date: "2026-11-27",
       dayDate: "Friday 27th November 2026",
@@ -25,6 +40,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom27112026sml.png",
       posterFull: "images/gigs/GreenRoom27112026sml.png"
@@ -39,6 +55,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom16102026sml.png",
       posterFull: "images/gigs/GreenRoom16102026sml.png"
@@ -53,6 +70,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom19092026sml.png",
       posterFull: "images/gigs/GreenRoom19092026sml.png"
@@ -67,6 +85,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom07082026sml.png",
       posterFull: "images/gigs/GreenRoom07082026sml.png"
@@ -81,6 +100,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom12062026sml.png",
       posterFull: "images/gigs/GreenRoom12062026sml.png"
@@ -95,6 +115,7 @@
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine and Whiskey Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/GreenRoom21032026sml.png",
       posterFull: "images/gigs/GreenRoom21032026sml.png"
@@ -109,6 +130,7 @@
       address: "101 Surf Club Ln, Breamlea VIC",
       mapsQuery: "Bancoora Surf Life Saving Club",
       venueUrl: "https://bancoora.asn.au/",
+      ticketsUrl: "",
       notes: "Free entry / 3 sets",
       posterThumb: "images/gigs/Banny03042026.png",
       posterFull: "images/gigs/Banny03042026.png"
@@ -123,6 +145,7 @@
       address: "Upstairs, Above Kahn Curry Hut. Level 1, 97-99 Ryrie Street Street Geelong Vic",
       mapsQuery: "Here and Now Lounge Geelong VIC 3220",
       venueUrl: "https://hereandnowlounge.com.au/",
+      ticketsUrl: "",
       notes: "Free entry / 2 sets",
       posterThumb: "images/gigs/HereAndNow07012026.png",
       posterFull: "images/gigs/HereAndNow07012026.png",
@@ -245,9 +268,17 @@
           <div class="gig-address">${gig.address}</div>
           ${gig.notes ? `<div class="gig-notes">${gig.notes}</div>` : ""}
           <div class="gig-time">On stage: ${gig.onStage}</div>
-          ${gig.venueUrl ? `
-            <a class="btn purple" target="_blank" rel="noopener"
-               href="${gig.venueUrl}">View Website</a>
+          ${(gig.venueUrl || (gig.ticketsUrl && gig.ticketsUrl.trim())) ? `
+            <div class="gig-actions">
+              ${gig.venueUrl ? `
+                <a class="btn purple" target="_blank" rel="noopener"
+                   href="${gig.venueUrl}">View Website</a>
+              ` : ""}
+              ${gig.ticketsUrl && gig.ticketsUrl.trim() ? `
+                <a class="btn purple" target="_blank" rel="noopener"
+                   href="${gig.ticketsUrl}">Get Tickets</a>
+              ` : ""}
+            </div>
           ` : ""}
           ${gig.photosFolder ? `
             <a class="btn photos" href="#" data-photos-folder="${gig.photosFolder}">Photos</a>
