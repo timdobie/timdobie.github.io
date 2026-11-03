@@ -15,7 +15,22 @@
 
   // Edit this list only when adding or changing gigs.
   const gigs = [
-      {
+  {
+      date: "2027-01-03",
+      dayDate: "Sunday 3rd January",
+      shortLabel: "Sun Jan 3rd",
+      onStage: "3:30 pm",
+      venueName: "The Elephant & Castle Hotel",
+      venueShort: "ECs",
+      address: "158 McKillop Street, Geelong VIC 3220",
+      mapsQuery: "The Elephant & Castle Hotel 158 McKillop Street, Geelong VIC 3220",
+      venueUrl: "https://elephantandcastle.com.au/",
+      ticketsUrl: "",
+      notes: "Free entry / 3 sets",
+      posterThumb: "images/gigs/EC03012027sml.png",
+      posterFull: "images/gigs/EC03012027sml.png"
+    },
+    {
       date: "2026-12-31",
       dayDate: "New Years Eve",
       shortLabel: "Thurs Dec 31st",
