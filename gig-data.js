@@ -17,7 +17,7 @@
   const gigs = [
   {
       date: "2027-01-03",
-      dayDate: "Sunday 3rd January",
+      dayDate: "Sunday 3rd January 2027",
       shortLabel: "Sun Jan 3rd",
       onStage: "3:30 pm",
       venueName: "The Elephant & Castle Hotel",
