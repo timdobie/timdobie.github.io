@@ -13,7 +13,7 @@
     alt: "We Are Working On It"
   };
 
-  // Edit this list only when adding or changing gigs.
+  // Edit this list only when adding or changing gigs please.
   const gigs = [
   {
       date: "2027-01-03",
