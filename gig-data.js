@@ -13,7 +13,7 @@
     alt: "We Are Working On It"
   };
 
-  // Edit this list only when adding or changing gigs please.
+  // Edit this list only when adding or changing gigs.
   const gigs = [
   {
       date: "2027-01-03",
@@ -65,8 +65,8 @@
       dayDate: "Friday 16th October 2026",
       shortLabel: "Fri Oct 16th",
       onStage: "8 pm",
-      venueName: "The Green Room Wine Whisky and Cocktail Bar",
-      venueShort: "The Green Room",
+      venueName: "The Bar",
+      venueShort: "The Blue Room",
       address: "94 Pakington St, Geelong West VIC 3218",
       mapsQuery: "The Green Room Wine Whisky and Cocktail Bar 94 Pakington St, Geelong West VIC 3218",
       venueUrl: "https://www.facebook.com/p/The-Green-Room-Wine-Whisky-and-Cocktail-Bar-100043234315014/",
